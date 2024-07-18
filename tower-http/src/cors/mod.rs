@@ -523,7 +523,7 @@ impl<S> Layer<S> for CorsLayer {
 /// [mdn]: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
 #[derive(Debug)]
 #[must_use]
-pub struct Cors<S> {
+pub struct Cors<S: Clone> {
     inner: S,
     layer: CorsLayer,
 }
