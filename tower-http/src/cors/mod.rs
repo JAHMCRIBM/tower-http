@@ -529,7 +529,7 @@ pub struct Cors<S> {
 }
 
 
-impl<S> Clone for Cors<S> {
+impl<S: Clone> Clone for Cors<S> {
     fn clone(&self) -> Self {
         Self {
             inner: self.inner.clone(),
