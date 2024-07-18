@@ -523,13 +523,12 @@ impl<S> Layer<S> for CorsLayer {
 /// [mdn]: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
 #[derive(Debug)]
 #[must_use]
-pub struct Cors<S: Clone> {
+pub struct Cors<S> {
     inner: S,
     layer: CorsLayer,
 }
 
-
-impl<S: Clone> Clone for Cors<S> {
+impl<S> Clone for Cors<S> {
     fn clone(&self) -> Self {
         Self {
             inner: self.inner.clone(),
