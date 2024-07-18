@@ -661,6 +661,7 @@ impl<S> Cors<S> {
 impl<S, ReqBody, ResBody> Service<Request<ReqBody>> for Cors<S>
 where
     S: Service<Request<ReqBody>, Response = Response<ResBody>>,
+    S::Error: Into<Box<dyn std::error::Error + Send + Sync>>,
     ResBody: Default,
 {
     type Response = S::Response;
