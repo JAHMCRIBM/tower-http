@@ -89,7 +89,7 @@ pub use self::{
 /// See the [module docs](crate::cors) for an example.
 ///
 /// [mdn]: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 #[must_use]
 pub struct CorsLayer {
     allow_credentials: AllowCredentials,
@@ -100,6 +100,21 @@ pub struct CorsLayer {
     expose_headers: ExposeHeaders,
     max_age: MaxAge,
     vary: Vary,
+}
+
+impl Clone for CorsLayer {
+    fn clone(&self) -> Self {
+        Self {
+            allow_credentials: self.allow_credentials.clone(),
+            allow_headers: self.allow_headers.clone(),
+            allow_methods: self.allow_methods.clone(),
+            allow_origin: self.allow_origin.clone(),
+            allow_private_network: self.allow_private_network.clone(),
+            expose_headers: self.expose_headers.clone(),
+            max_age: self.max_age.clone(),
+            vary: self.vary.clone(),
+        }
+    }
 }
 
 #[allow(clippy::declare_interior_mutable_const)]
@@ -506,11 +521,21 @@ impl<S> Layer<S> for CorsLayer {
 /// See the [module docs](crate::cors) for an example.
 ///
 /// [mdn]: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 #[must_use]
 pub struct Cors<S> {
     inner: S,
     layer: CorsLayer,
+}
+
+
+impl<S> Clone for Cors<S> {
+    fn clone(&self) -> Self {
+        Self {
+            inner: self.inner.clone(),
+            layer: self.layer.clone(),
+        }
+    }
 }
 
 impl<S> Cors<S> {
