@@ -521,20 +521,11 @@ impl<S> Layer<S> for CorsLayer {
 /// See the [module docs](crate::cors) for an example.
 ///
 /// [mdn]: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[must_use]
 pub struct Cors<S> {
     inner: S,
     layer: CorsLayer,
-}
-
-impl<S> Clone for Cors<S> {
-    fn clone(&self) -> Self {
-        Self {
-            inner: self.inner.clone(),
-            layer: self.layer.clone(),
-        }
-    }
 }
 
 impl<S> Cors<S> {
