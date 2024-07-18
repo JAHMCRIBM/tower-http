@@ -488,7 +488,7 @@ impl Default for CorsLayer {
     }
 }
 
-impl<S> Layer<S> for CorsLayer {
+impl<S: Clone> Layer<S> for CorsLayer {
     type Service = Cors<S>;
 
     fn layer(&self, inner: S) -> Self::Service {
@@ -506,14 +506,14 @@ impl<S> Layer<S> for CorsLayer {
 /// See the [module docs](crate::cors) for an example.
 ///
 /// [mdn]: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 #[must_use]
-pub struct Cors<S> {
+pub struct Cors<S: Clone> {
     inner: S,
     layer: CorsLayer,
 }
 
-impl<S> Cors<S> {
+impl<S: Clone> Cors<S> {
     /// Create a new `Cors`.
     ///
     /// See [`CorsLayer::new`] for more details.
@@ -646,7 +646,7 @@ impl<S> Cors<S> {
     }
 }
 
-impl<S, ReqBody, ResBody> Service<Request<ReqBody>> for Cors<S>
+impl<S: Clone, ReqBody, ResBody> Service<Request<ReqBody>> for Cors<S>
 where
     S: Service<Request<ReqBody>, Response = Response<ResBody>>,
     S::Error: Into<Box<dyn std::error::Error + Send + Sync>>,
